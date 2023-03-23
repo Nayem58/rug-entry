@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rug Admin Panel</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .common-sec {
+        padding-top: 50px;
+        padding-bottom: 50px;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .common-sec .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 30px;
+      }
+
+      label,
+      input,
+      textarea {
+        display: block;
+        width: 100%;
+      }
+
+      label + input {
+        margin-top: 10px;
+      }
+
+      input,
+      textarea {
+        padding: 10px;
+        border: 1px solid #cecece;
+      }
+
+      #rugGenForm {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 30px;
+      }
+
+      .image-group {
+        border: 1px solid #cecece;
+        padding: 30px;
+      }
+
+      .content-group {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 30px;
+        padding: 30px;
+        border: 1px solid #cecece;
+      }
+
+      #submit {
+        max-width: 500px;
+        margin: 0 auto;
+        background-color: darkslateblue;
+        color: #fff;
+        font-size: 30px;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="common-sec">
+      <div class="container">
+        <form id="rugGenForm" action="#">
+          <div class="image-group">
+            <div class="input-group">
+              <label for="imageFullPath">Image Full Path</label>
+              <input
+                type="text"
+                name="imageFullPath"
+                id="imageFullPath"
+                required
+              />
+            </div>
+            <div class="input-group">
+              <label for="imageAlt">Image Alt</label>
+              <input type="text" name="imageAlt" id="imageAlt" required />
+            </div>
+          </div>
+          <hr />
+          <div class="content-group">
+            <div class="input-group">
+              <label for="h1">H1</label>
+              <input type="text" name="h1" id="h1" />
+            </div>
+            <div class="input-group">
+              <label for="availableSizes">Available Sizes</label>
+              <input type="text" name="availableSizes" id="availableSizes" />
+            </div>
+            <div class="input-group">
+              <label for="escription">Description</label>
+              <input type="text" name="description" id="description" />
+            </div>
+            <div class="input-group">
+              <label for="origin">Origin</label>
+              <input type="text" name="origin" id="origin" />
+            </div>
+            <div class="input-group">
+              <label for="colorGround">Color Ground</label>
+              <input type="text" name="colorGround" id="colorGround" />
+            </div>
+            <div class="input-group">
+              <label for="colorBorder">Color Border</label>
+              <input type="text" name="colorBorder" id="colorBorder" />
+            </div>
+            <div class="input-group">
+              <label for="colorGroup">Color Group</label>
+              <input type="text" name="colorGroup" id="colorGroup" />
+            </div>
+            <div class="input-group">
+              <label for="material">Material</label>
+              <input type="text" name="material" id="material" />
+            </div>
+            <div class="input-group">
+              <label for="weave">Weave</label>
+              <input type="text" name="weave" id="weave" />
+            </div>
+            <div class="input-group">
+              <label for="sku">SKU</label>
+              <input type="text" name="sku" id="sku" />
+            </div>
+          </div>
+          <hr />
+          <input type="submit" value="Get HTML DOM" id="submit" />
+        </form>
+        <textarea name="DOM" id="DOM" cols="80" rows="50"></textarea>
+      </div>
+    </div>
+
+    <script>
+      // Get the form element
+      const form = document.getElementById("rugGenForm");
+
+      // Add an event listener to the form's submit event
+      form.addEventListener("submit", function (e) {
+        // Prevent the default behavior of the form
+        e.preventDefault();
+
+        // Get the value entered in the name input field
+        const imageFullPath = document.getElementById("imageFullPath").value;
+        const imageAlt = document.getElementById("imageAlt").value;
+
+        const formatAlt = (imgAlt) => {
+          let formattedAlt = imgAlt.replace(/[^a-zA-Z0-9]+/g, " ");
+
+          formattedAlt =
+            formattedAlt.charAt(0).toUpperCase() + formattedAlt.slice(1);
+
+          return formattedAlt;
+        };
+
+        const h1 = document.getElementById("h1").value;
+        const availableSizes = document.getElementById("availableSizes").value;
+        const description = document.getElementById("description").value;
+        const origin = document.getElementById("origin").value;
+        const colorGround = document.getElementById("colorGround").value;
+        const colorBorder = document.getElementById("colorBorder").value;
+        const colorGroup = document.getElementById("colorGroup").value;
+        const material = document.getElementById("material").value;
+        const weave = document.getElementById("weave").value;
+        const sku = document.getElementById("sku").value;
+
+        //loop
+        // const loop = () => {
+        //   const imgDOM = [];
+        //   for (let i = 0; i < 4; i++) {
+        //     imgDOM.push(
+        //       `<img src="sm-${i}.jpg" data-preview="lg-${i}.jpg" alt="" />`
+        //     );
+        //   }
+        //   return imgDOM;
+        // };
+
+        // Display the value inside the #DOM div
+        const domDiv = document.getElementById("DOM");
+        domDiv.innerHTML = `<div class="common-sec">
+  <div class="container">
+    <div class="product-desc-block">
+      <div class="product-short-desc">
+        <h1 class="price-sec-heading">${h1}</h1>
+        <p><b>Available Sizes:</b> ${availableSizes}</p>
+      </div>
+      <div class="product-long-desc">
+        <h2 class="price-sec-heading">DESCRIPTION</h2>
+        <p>${description}</p>
+      </div>
+      ##SocialShareWidget##
+      <div class="product-img">
+        <div class="product-img">
+          <div class="product-imgs">
+            <div class="big-image">
+              <img
+                src="/images/rugs-for-sale/${imageFullPath}-lg.jpg"
+                alt="${formatAlt(imageAlt)}"
+                id="zoom"
+              />
+
+              <img
+                src="/images/rugs-for-sale/${imageFullPath}-lg-1.jpg"
+                alt="${formatAlt(imageAlt)} 01"
+                id="zoom"
+              />
+            </div>
+            <div class="small-images">
+              <img
+                src="/images/rugs-for-sale/${imageFullPath}-sm.jpg"
+                data-preview="/images/rugs-for-sale/${imageFullPath}-lg.jpg"
+                alt="${formatAlt(imageAlt)}"
+              />
+
+              <img
+                src="/images/rugs-for-sale/${imageFullPath}-sm-1.jpg"
+                data-preview="/images/rugs-for-sale/${imageFullPath}-lg-1.jpg"
+                alt="${formatAlt(imageAlt)} 01"
+              />
+              <img
+                src="/images/rugs-for-sale/${imageFullPath}-sm-2.jpg"
+                data-preview="/images/rugs-for-sale/${imageFullPath}-lg-2.jpg"
+                alt="${formatAlt(imageAlt)} 02"
+              />
+              <img
+                src="/images/rugs-for-sale/${imageFullPath}-sm-3.jpg"
+                data-preview="/images/rugs-for-sale/${imageFullPath}-lg-3.jpg"
+                alt="${formatAlt(imageAlt)} 03"
+              />
+              <img
+                src="/images/rugs-for-sale/${imageFullPath}-sm-4.jpg"
+                data-preview="/images/rugs-for-sale/${imageFullPath}-lg-4.jpg"
+                alt="${formatAlt(imageAlt)} 04"
+              />
+              <img
+                src="/images/rugs-for-sale/${imageFullPath}-sm-5.jpg"
+                data-preview="/images/rugs-for-sale/${imageFullPath}-lg-5.jpg"
+                alt="${formatAlt(imageAlt)} 05"
+              />
+              <img
+                src="/images/rugs-for-sale/${imageFullPath}-sm-6.jpg"
+                data-preview="/images/rugs-for-sale/${imageFullPath}-lg-6.jpg"
+                alt="${formatAlt(imageAlt)} 06"
+              />
+              <img
+                src="/images/rugs-for-sale/${imageFullPath}-sm-7.jpg"
+                data-preview="/images/rugs-for-sale/${imageFullPath}-lg-7.jpg"
+                alt="${formatAlt(imageAlt)} 07"
+              />
+              <img
+                src="/images/rugs-for-sale/${imageFullPath}-sm-8.jpg"
+                data-preview="/images/rugs-for-sale/${imageFullPath}-lg-8.jpg"
+                alt="${formatAlt(imageAlt)} 08"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="product-information">
+        <p class="product-information-heading">ADDITIONAL INFORMATION</p>
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td>Origin</td>
+              <td>${origin}</td>
+            </tr>
+            <tr>
+              <td>Color Ground</td>
+              <td>${colorGround}</td>
+            </tr>
+            <tr>
+              <td>Color Border</td>
+              <td>${colorBorder}</td>
+            </tr>
+            <tr>
+              <td>Color Group</td>
+              <td>${colorGround}</td>
+            </tr>
+            <tr>
+              <td>Material</td>
+              <td>${material}</td>
+            </tr>
+            <tr>
+              <td>Weave</td>
+              <td>${weave}</td>
+            </tr>
+            <tr>
+              <td>SKU</td>
+              <td>JOR${sku}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>`;
+      });
+    </script>
+  </body>
+</html>
