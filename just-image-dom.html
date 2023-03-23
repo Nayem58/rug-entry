@@ -13,6 +13,11 @@
         box-sizing: border-box;
       }
 
+      hr {
+        margin-top: 30px;
+        margin-bottom: 30px;
+      }
+
       .common-sec {
         padding-top: 50px;
         padding-bottom: 50px;
@@ -24,7 +29,25 @@
         margin: 0 auto;
       }
 
-      .common-sec .container {
+      .d-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 30px;
+      }
+
+      .d-grid a {
+        display: block;
+        width: 100%;
+        background-color: darkslateblue;
+        color: #fff;
+        font-size: 30px;
+        border-radius: 5px;
+        padding: 10px 30px;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      .common-sec > .container:last-child {
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-gap: 30px;
@@ -64,12 +87,19 @@
         background-color: darkslateblue;
         color: #fff;
         font-size: 30px;
-        border-radius: 10px;
+        border-radius: 5px;
+        padding: 10px 30px;
       }
     </style>
   </head>
   <body>
     <div class="common-sec">
+      <div class="container">
+        <div class="d-grid">
+          <a href="/">Full DOM</a><a href="/just-image-dom">Image DOM</a>
+        </div>
+      </div>
+      <hr />
       <div class="container">
         <form id="rugGenForm" action="#">
           <div class="image-group">
